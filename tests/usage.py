@@ -8,6 +8,22 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 from Bcryptify.aes_gcm import AesGcmCipher
+from Bcryptify.GenKeyAesGcm import GenKeyAesGcm
+from Bcryptify.FileManage import FileManage
+
+
+
+#key_gen = GenKeyAesGcm()
+#key_save_file = FileManage()
+file_manager = FileManage() # class permettant de géré les fichiers
+
+#key_save_file.write_file_key("./key_aes_gcm", key_gen.creat_key_32())
+
+#file_key = os.path.join(BASE_DIR, "./key_aes_gcm")
+#print(key_save_file.read_file_key(file_key))
+
+#print(key_gen.creat_key_32())
+
 
 # --- Configuration ---
 
@@ -35,23 +51,16 @@ aes_gcm = AesGcmCipher(key)
 # Chiffre un fichier et le déchiffre
 
 
-def read_file(filename: str) -> bytes:
-    with open(filename, "rb") as f:
-        return f.read()
-
-def write_file(filename: str, data: bytes) -> None:
-    with open(filename, "wb") as f:
-        f.write(data)
 
 def encrypt_file(filepath: str) -> None:
     if not os.path.isfile(filepath):
         raise FileNotFoundError(f"The file {filepath} does not exist.")
 
-    data = read_file(filepath)
+    data = file_manager.read_file(filepath)
     encrypted = aes_gcm.encrypt(data)
 
     encrypted_filepath = filepath + ".lock"
-    write_file(encrypted_filepath, encrypted)
+    file_manager.write_file(encrypted_filepath, encrypted)
 
     os.remove(filepath) 
     print(f"File encrypted in {encrypted_filepath} and original file deleted.")
@@ -63,11 +72,11 @@ def decrypt_file(encrypted_filepath: str) -> None:
     if not os.path.isfile(encrypted_filepath):
         raise FileNotFoundError(f"The file {encrypted_filepath} does not exist.")
 
-    data = read_file(encrypted_filepath)
+    data = file_manager.read_file(encrypted_filepath)
     decrypted = aes_gcm.decrypt(data)
 
     original_filepath = encrypted_filepath[:-5] 
-    write_file(original_filepath, decrypted)
+    file_manager.write_file(original_filepath, decrypted)
 
     os.remove(encrypted_filepath)
     print(f"Decrypted file in {original_filepath} and encrypted file deleted.")

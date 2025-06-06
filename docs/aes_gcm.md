@@ -1,27 +1,4 @@
-# Bcryptify
-
-Bcryptify is a modern and elegant Python library designed to simplify the use of cryptographic algorithms, while adhering to SOLID principles to ensure clean, extensible, and maintainable code.
-
----
-
-## 📦 Installation 
-
-You can install **Bcryptify** directly from PyPI with pip:
-
-```bash 
-pip install bcryptify
-```
-
-Bcryptify library dependent on the cryptography library
-
-```bash
-pip install cryptography
-```
-
-
-## 🚀 Use
-
-Here is a simple example of using the **AesGcmCipher** class to encrypt and decrypt messages or files.
+# Example Aes GCM
 
 
 ```python
@@ -29,8 +6,7 @@ import os
 from Bcryptify.aes_gcm import AesGcmCipher
 
 # 256-bit AES key (must be kept secret)
-key =
-b'\xcd_\x8d\xfd1E\xd4\xe3uj\xee_\x1dj\x9c\x07\xa3\x13\x95\x96\x10\xa6\xf3\rb\xc0\x08\xde\xfa\xb6\x99\xc9'
+key = b'\xcd_\x8d\xfd1E\xd4\xe3uj\xee_\x1dj\x9c\x07\xa3\x13\x95\x96\x10\xa6\xf3\rb\xc0\x08\xde\xfa\xb6\x99\xc9'
 
 # Initializing the AES-GCM cipher
 aes_gcm = AesGcmCipher(key)
@@ -69,9 +45,10 @@ def decrypt_file(encrypted_filepath: str) -> None:
     print(f"Decrypted file in {original_filepath} and encrypted file deleted.")
 
 # Example of use
-file_path = "chap 12.pdf"
+file_path = "chap 12.pdf" # file to encrypt
 
 encrypt_file(file_path)
+
 decrypt_file(file_path + ".lock")
 
 
@@ -87,10 +64,3 @@ decrypt_file(file_path + ".lock")
 #decrypted_message = aes_gcm.decrypt(encrypted_message)
 #print(f"Deciphered message : {decrypted_message.decode('utf-8')}")
 ```
-
-<br>
-
-## support
-
-- RSA
-- AES GCM
